@@ -1,0 +1,4 @@
+interface:
+  display_name: "Maintain Project Knowledge"
+  short_description: "Preserve compact project memory for future agents"
+  default_prompt: "Use $maintain-project-knowledge before and after this change to load the complete core memory, map structural work to existing architecture, synchronize durable knowledge, and verify it against authoritative source."

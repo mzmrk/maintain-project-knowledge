@@ -20,7 +20,13 @@ git clone https://github.com/mzmrk/maintain-project-knowledge.git \
 For one project, clone into `.agents/skills/maintain-project-knowledge/` instead. If you configured a different Codex home,
 use its `skills/` directory.
 
-Then invoke it with your task:
+For an existing project, start by organizing its documentation:
+
+```text
+Use $maintain-project-knowledge to reorganize our docs into compact, source-linked project memory.
+```
+
+Keep using it during development so that knowledge stays aligned with the implementation:
 
 ```text
 Use $maintain-project-knowledge while adding CSV export.
@@ -59,7 +65,8 @@ Each substantive claim has one owner. Other documents link to that explanation i
 5. **Verify.** Check documentation against source and run the relevant validation.
 
 Implementation, schemas, configuration, and tests take precedence over documentation when describing current behavior.
-Intended policy remains distinct from what is implemented.
+Intended policy remains distinct from what is implemented. Tests provide evidence of supported behavior; coverage-only
+changes do not automatically require documentation changes.
 
 When no durable knowledge changes, the skill leaves the documentation untouched.
 
@@ -67,9 +74,13 @@ When no durable knowledge changes, the skill leaves the documentation untouched.
 
 Project memory lives under `docs/`, indexed by `docs/README.md`.
 
-The core has a **6,000-word limit**. Agents consolidate it before adding specialist detail to `docs/references/`. References
-have explicit read conditions and must be verified before use. Optional raw evidence—such as an exact response or
-screenshot—belongs under `docs/evidence/` and must be linked from its owning document.
+The core has a **6,000-word limit**. Agents first remove stale, redundant, or source-recoverable detail. Only necessary
+knowledge that still cannot fit goes into `docs/references/`; references are non-authoritative, have explicit read
+conditions, and must be verified before use. Optional raw evidence—such as an exact response or screenshot—belongs under
+`docs/evidence/` and must be linked from its owning document.
+
+After conversation context is compacted, the agent reloads the core from disk. This gives it a way to recover documented
+project boundaries and decisions without relying entirely on conversation history.
 
 The root README remains human-facing onboarding. It is reviewed when public instructions or capabilities change, rather
 than loaded as routine agent memory.
@@ -78,8 +89,12 @@ Documentation maintenance alone does not authorize unrelated implementation chan
 
 ## Where it helps—and what it costs
 
-The skill is most useful for ongoing projects, repeated agent sessions, and systems with important constraints that are
-easy to miss. It aims to reduce repeated investigation and preserve understanding as the code evolves.
+I built this for my personal projects. In my experience with Codex, maintaining this memory made the agent more organized
+and less likely to lose architectural context or reinvent existing solutions. The extra upfront reading and maintenance
+felt worthwhile over longer projects because I spent less time repeating explanations and correcting drift. These are
+personal observations, not measured guarantees.
+
+For a real example, see [Field Kit's project memory](https://github.com/mzmrk/stalzone-field-kit/blob/main/docs/README.md).
 
 That comes with tradeoffs:
 
